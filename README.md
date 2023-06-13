@@ -1591,105 +1591,167 @@ Cognito provides a comprehensive solution for managing user identities, authenti
 ---
 # Step Functions
 
-Step Functions is a fully managed service provided by AWS that allows you to model and execute workflows as state machines. Workflows can be modeled using JSON, and Step Functions provides visualization and monitoring capabilities.
+Step Functions is an AWS service that enables you to model workflows as state machines. Workflows are written in JSON and provide visualization and history tracking capabilities.
 
-### Tasks
+Key Features of Step Functions:
 
-Step Functions supports a variety of tasks that can be included in your workflows. These tasks can invoke Lambda functions, run batch jobs, execute ECS tasks, insert data into a database, publish messages to SNS, or even launch another Step Function. Additionally, you can run Activities, which are external processes or services that perform work and return results back to the Step Function.
+- **Tasks**: Step Functions supports various tasks such as invoking a Lambda function, running a batch job, executing an ECS task, inserting data into a database, publishing to SNS, or launching another Step Function. Activities can also be used to poll external processes and return results to the Step Function.
 
-### States
+- **States**: Step Functions provides different states for workflow definition, including choice, fail or succeed, pass, wait, map, and parallel. Each state represents a specific action or decision within the workflow.
 
-Step Functions provide various states that can be used in your workflows. These states include choice, fail or succeed, pass, wait, map, and parallel. You can also use retry and catch to handle errors. Errors can be categorized into different types such as States.ALL, States.Timeout, States.TaskFailed, and States.Permissions.
+- **Error Handling**: Step Functions allows you to handle errors using retry and catch mechanisms. You can define retry conditions and specify how to handle different types of errors, including predefined error states like States.ALL, States.Timeout, States.TaskFailed, and States.Permissions.
 
-### Standard Workflows
+Standard Workflows:
 
-Standard workflows in Step Functions have a maximum duration of 1 year. They support an execution start rate of over 2,000 per second and a state transition rate of over 4,000 per second per account. Pricing is based on the number of state transitions. Execution history can be listed and described using Step Functions APIs and can be inspected using CloudWatch. Standard workflows provide exactly-once workflow execution.
+- Maximum duration of 1 year
+- Supports execution start rate of over 2,000 per second
+- Supports state transition rate of over 4,000 per second per account
+- Priced per state transition
+- Execution history can be listed and described using Step Functions APIs and inspected using CloudWatch
+- Provides exactly-once workflow execution
 
-### Express Workflows
+Express Workflows:
 
-Express workflows in Step Functions have a maximum duration of 5 minutes. They support an execution start rate of over 100,000 per second and have nearly unlimited state transitions. Pricing for express workflows is based on the number of executions, duration, and memory consumption. Execution details can be inspected through CloudWatch. Express workflows provide at-least-once workflow execution.
+- Maximum duration of 5 minutes
+- Supports execution start rate of over 100,000 per second
+- Nearly unlimited state transition rate
+- Priced based on the number of executions, duration, and memory consumption
+- Execution monitoring can be done through CloudWatch
+- Provides at-least-once workflow execution
 
-Step Functions is a powerful service that allows you to orchestrate and coordinate complex workflows. It provides reliability, scalability, and monitoring capabilities for your workflows.
+Step Functions offers a way to model and manage workflows as state machines, providing flexibility, error handling, and different workflow modes to meet various requirements.
 
 ---
 # AppSync
 
-AppSync is a managed service provided by AWS that enables you to build and deploy GraphQL APIs. It allows you to include data from multiple sources and provides real-time data retrieval capabilities using WebSocket or MQTT protocols.
+AppSync is a managed service provided by AWS that allows you to build scalable applications using GraphQL. It provides the following features:
 
-### Features
+- **GraphQL**: AppSync uses the GraphQL query language to define the API schema and interact with the data sources. GraphQL enables clients to specify their specific data requirements.
 
-- **Managed service:** AppSync is a fully managed service that takes care of the infrastructure and scaling for you, allowing you to focus on building your GraphQL API.
+- **Data Sources**: AppSync integrates with multiple data sources, such as DynamoDB, Lambda, RDS, and HTTP endpoints. These sources provide the data that AppSync resolves and returns in response to GraphQL queries.
 
-- **GraphQL:** AppSync uses the GraphQL query language to define your API schema and interact with your data sources. GraphQL provides a flexible and efficient way to fetch data and allows clients to specify exactly what data they need.
+- **Schema**: The GraphQL schema is uploaded to AppSync, defining the available types, fields, and operations. This schema acts as the contract between the client and the server, specifying the data structure and available operations.
 
-- **Multiple data sources:** AppSync can integrate with various data sources such as DynamoDB, RDS, Lambda, Elasticsearch, and more. You can combine data from multiple sources and define resolvers to fetch the data and respond to client queries.
+- **Resolvers**: Resolvers fetch and transform the data from the specified data sources based on the GraphQL queries. Each field in the GraphQL schema typically has a corresponding resolver that determines how the data is retrieved and returned.
 
-- **Real-time data retrieval:** AppSync supports real-time data retrieval using WebSocket or MQTT protocols. This allows clients to subscribe to data changes and receive updates in real-time, enabling reactive and interactive applications.
+- **Real-time Data**: AppSync supports real-time data retrieval through protocols like WebSocket and MQTT. Clients can subscribe to specific data fields and receive real-time updates whenever the subscribed data changes.
 
-### How it works
+- **Response**: When clients send a GraphQL query to AppSync, the query is resolved by AppSync, which communicates with the configured data sources to retrieve the requested data. The response is then sent back to the clients in JSON format, containing the requested data.
 
-1. **Upload schema:** You start by uploading your GraphQL schema to AppSync. The schema defines the types, fields, and operations supported by your API.
-
-2. **Client sends GraphQL query:** Clients can send GraphQL queries to AppSync, specifying the data they need and the structure of the response.
-
-3. **Resolving queries:** When a query is received, AppSync resolves it by fetching the data from the configured data sources. This can involve making requests to DynamoDB, invoking Lambda functions, or querying other services.
-
-4. **Sending response:** Once the data is retrieved, AppSync sends the response back to the client in JSON format, containing the requested data.
-
-AppSync simplifies the process of building and deploying GraphQL APIs, providing real-time capabilities and supporting multiple data sources. It enables you to build efficient and flexible APIs that meet the needs of your applications.
+AppSync simplifies the process of building applications that require data from multiple sources, providing real-time capabilities and efficient data retrieval through GraphQL.
 
 ---
-# Security Token Service (STS)
+# STS (Security Token Service)
 
-The Security Token Service (STS) is an AWS service that provides temporary credentials for accessing AWS resources. These temporary credentials are valid for a specified duration, ranging from 15 minutes up to 1 hour.
+STS (Security Token Service) is an AWS service that allows you to obtain temporary credentials for accessing AWS resources. These credentials have a limited duration, typically between 15 minutes and 1 hour. STS provides several API operations for obtaining temporary credentials:
 
-### Key Operations
+- `AssumeRole`: Allows you to assume a specified IAM role and obtain temporary credentials for that role.
+- `AssumeRoleWithSAML`: Enables you to assume a role using a SAML identity provider (IdP) and acquire temporary credentials.
+- `AssumeRoleWithWebIdentity`: Allows you to assume a role using a web identity provider (such as Amazon Cognito or OpenID Connect) and get temporary credentials.
+- `GetSessionToken`: Retrieves temporary credentials for an IAM user or federated user. This operation is commonly used for MFA (Multi-Factor Authentication) scenarios.
+- `GetFederationToken`: Generates temporary credentials for a federated user.
 
-- **AssumeRole:** Allows you to assume a specified IAM role and obtain temporary credentials that are associated with that role.
+Additionally, STS provides other operations such as `GetCallerIdentity` for retrieving information about the caller's identity and `DecodeAuthorizationMessage` for decoding authorization error messages.
 
-- **AssumeRoleWithSAML:** Enables you to assume an IAM role using a SAML-based identity provider (IdP) for authentication.
+One of the primary use cases of STS is assuming roles. To do this, you define an IAM role and specify which principals (users, groups, or other AWS services) can access the role. Then, you can use the AWS STS API to retrieve temporary credentials and impersonate the IAM role. This allows you to temporarily inherit the permissions and access resources associated with that role.
 
-- **AssumeRoleWithWebIdentity:** Allows you to assume an IAM role using a web identity provider, such as Amazon Cognito, for authentication.
+STS also supports Multi-Factor Authentication (MFA). By using the `GetSessionToken` operation with the appropriate IAM policy containing IAM conditions such as `aws:MultiFactorAuthPresent:true`, you can ensure that the user requesting the session token has successfully authenticated using MFA.
 
-- **GetSessionToken:** Retrieves a set of temporary security credentials (access key, secret access key, and session token) for a user or federated user.
-
-- **GetFederationToken:** Generates a set of temporary security credentials for a federated user.
-
-- **GetCallerIdentity:** Returns details about the AWS account that owns the calling identity (the user or role whose credentials are used to call the operation).
-
-- **DecodeAuthorizationMessage:** Decodes an encoded authorization message, which can be useful for troubleshooting authorization issues.
-
-### Usage
-
-STS allows you to assume roles, which involves defining an IAM role and specifying which principals are allowed to assume that role. Once the role is defined, you can use the AWS STS API to retrieve temporary credentials and impersonate the IAM role.
-
-### Multi-Factor Authentication (MFA)
-
-STS also supports Multi-Factor Authentication (MFA) when obtaining temporary credentials. By using the `GetSessionToken` operation with the appropriate IAM policy that includes IAM conditions, such as `aws:MultiFactorAuthPresent:true`, you can enforce MFA requirements for accessing AWS resources.
-
-STS provides a secure and flexible way to manage temporary credentials and control access to AWS resources. It enables you to implement granular access control policies and enforce additional security measures, such as MFA, to protect your AWS infrastructure.
+STS provides a secure and flexible way to obtain temporary credentials and assume roles, enabling you to manage access to AWS resources with finer granularity and enhanced security.
 
 ---
 # Directory Services
 
-AWS Directory Services is a managed service that allows you to create and manage directories in the AWS Cloud. It provides several options for integrating with Microsoft Active Directory (AD) and simplifies the management of users, groups, and directory resources.
-
 ### AWS Managed Microsoft AD
 
-AWS Managed Microsoft AD allows you to create your own Active Directory in the AWS Cloud. It provides a fully managed AD service with features like user and group management, integrated DNS, and support for multi-factor authentication (MFA). You can use AWS Managed Microsoft AD to manage your users locally within AWS and leverage AWS services that integrate with Active Directory.
-
-One of the key features of AWS Managed Microsoft AD is the ability to establish trust connections with on-premises Active Directory environments. This enables you to extend your existing on-premises AD to the AWS Cloud and seamlessly integrate your on-premises and AWS resources.
+AWS Managed Microsoft AD is a service provided by AWS that allows you to create and manage your own Active Directory (AD) in the AWS cloud. With this service, you can manage users and groups locally, set up multi-factor authentication (MFA), and establish trust connections with on-premises AD environments.
 
 ### AD Connector
 
-AD Connector is a directory gateway that allows you to redirect directory requests from AWS services to your on-premises Active Directory. It acts as a proxy between AWS services and your on-premises AD. AD Connector supports multi-factor authentication (MFA) and provides secure access to your on-premises directory resources.
-
-With AD Connector, users and groups are managed on the on-premises AD, and AWS services can use the AD Connector to authenticate and authorize access to your on-premises resources.
+AD Connector is a directory gateway provided by AWS. It allows you to redirect directory requests to your on-premises AD infrastructure. With AD Connector, users and groups are managed on the on-premises AD, enabling a hybrid directory solution. It also supports MFA for enhanced security.
 
 ### Simple AD
 
-Simple AD is an Active Directory-compatible managed directory service provided by AWS. It is a cost-effective option for organizations that need basic AD functionality without the complexity of managing a full-scale Active Directory infrastructure.
+Simple AD is an AD-compatible managed directory service offered by AWS. It provides a basic AD functionality and can be used as a standalone directory for user authentication and directory-related operations within the AWS environment. However, Simple AD cannot be joined with an on-premises AD.
 
-Unlike AWS Managed Microsoft AD and AD Connector, Simple AD cannot be joined with an on-premises Active Directory environment. It is designed to be a standalone directory service within the AWS Cloud.
+These Directory Services options offered by AWS provide different capabilities and deployment options for managing user directories and integrating with on-premises AD environments.
 
-Directory Services simplifies the deployment and management of directory resources in the AWS Cloud, providing flexibility and scalability for your directory needs.
+---
+# AWS KMS
+
+Key management service to manage the encryption keys integrated with IAM and most AWS services. KMS key encryption can be used through SDK and CLI. Encrypted secrets can be stored at the app or env level.
+
+### Symmetric (AES-256)
+
+- Single encryption key for encrypt/descrypt
+- Used by all AWS integrated services
+- Call KMS API to use the key, not available unencrypted
+
+### Asymmetric (RSA & ECC)
+
+- Public key for encryption, private key for decryption
+- Can download public key, cannot access private key unencrypted
+- Used for encryption outside AWS when there's no access to KMS API
+
+KMS keys are scoped per region. To copy an EBS KMS encrypted volume:
+
+1. Create snapshot encrypted with the same key
+2. Take snapshot from this encrypted snapshot
+3. Copy it to the other region with KMS ReEncrypt and a different key
+4. In the other region, restore the copied snapshot into its own EBS volume
+
+### Key Policies
+
+- Cannot access keys without KMS policies
+- Default key policy:
+    - Created if one is not provided
+    - Provides complete access to the key to every user in the account
+- Custom key policy:
+    - Defines users, roles, and administrators who can access and administer the key
+    - Used for cross-account key access
+
+For secrets bigger than 4 KB, use Envelope encryption:
+
+- Use GenerateDataKey API to encrypt the big file
+- KMS checks IAM permissions and generates a plaintext data key
+- Encrypt the file using the data encryption key (DEK) client-side
+- To decrypt, call Decrypt API to get plaintext data key
+
+Encryption SDK implements envelope encryption and includes Data Key Caching feature to re-use data keys.
+
+### Quotas and Throttling
+
+- Exceeding KMS request quotas results in ThrottlingException
+- Use exponential backoff for retries
+- Request quota increase from API or AWS support
+- Caching helps mitigate quotas
+
+For S3 encryption, SSE-KMS is an option:
+
+- Keys handled and managed by KMS
+- Encryption server-side
+- Use "x-amz-server-side-encryption: aws:kms" header
+- S3 calls to KMS for SSE-KMS count against KMS limits
+- S3 bucket key option:
+    - Decreases API calls to KMS from S3 and reduces encryption costs
+    - S3 bucket key encrypts objects inside S3 (envelope encryption)
+
+To force SSL on S3, use policy with DENY on "aws:SecureTransport=false"
+To force SSE-KMS encryption, deny other encryption headers and deny unencrypted objects.
+
+### SSM Parameter Store
+
+- Serverless store of config and secrets
+- Can encrypt/decrypt stored files with KMS
+- KMS encryption is optional
+
+### Secrets Manager
+
+- Specialized in secrets storing
+- Integrates with RDS, provides secrets rotation (configurable number of days)
+- KMS encryption is mandatory
+
+### CloudWatch Logs
+
+- Encrypt logs with KMS keys by enabling encryption with a CMK on the log group
+- Use CloudWatch Logs API commands "associate-kms-key" and "create-log-group"
